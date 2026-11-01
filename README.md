@@ -58,6 +58,72 @@ FastAPI backend ─── PostgreSQL + Alembic
 | [`backend/simulation/`](./backend/simulation) | Risk, purchasing, markdown, and policy scenarios |
 | [`alembic/`](./alembic) | Database migrations |
 
+## AI system
+
+StockWise uses AI as a controlled interpretation layer over validated retail
+evidence. The core calculations remain deterministic and auditable.
+
+### Four-agent workflow
+
+```text
+Question
+   │
+   ▼
+Supervisor ── selects approved evidence domains
+   │
+   ├── Forecast Intelligence ── saved forecast and evaluation evidence
+   ├── Inventory Risk ──────── stockout, overstock, and expiry evidence
+   ├── Decision Intelligence ─ saved purchasing and policy scenarios
+   └── Business Intelligence ─ cross-domain synthesis
+            │
+            ▼
+     Validated qualitative findings
+```
+
+The four specialists have separate prompts and response contracts:
+
+1. **Forecast Intelligence** explains saved forecast behavior, model comparisons,
+   uncertainty, and data limitations.
+2. **Inventory Risk** interprets stockout, overstock, coverage, and expiry-risk
+   evidence without inventing inventory facts.
+3. **Decision Intelligence** explains saved purchasing, budget, markdown, and
+   policy scenarios while keeping numerical values tied to source evidence.
+4. **Business Intelligence** synthesizes completed specialist findings across
+   domains and identifies disagreements or missing inputs.
+
+### LangGraph orchestration
+
+LangGraph coordinates the investigation as a bounded state graph:
+
+1. The **Supervisor** routes the question or uses a conservative deterministic
+   route when model classification is unavailable.
+2. Approved evidence is loaded from saved forecast, risk, and decision sources.
+3. Evidence passes schema, numeric, and reference validation before reaching an agent.
+4. Specialist nodes run sequentially or in the configured parallel mode.
+5. The Business Intelligence node runs after the specialist barrier when
+   cross-domain synthesis is requested.
+6. Final answers combine deterministic report values with accepted qualitative
+   findings, while failed nodes produce safe fallback output.
+
+This keeps orchestration observable and bounded: no agent receives unrestricted
+tool access, and no model response can authorize a purchase, inventory change,
+approval, or live price update.
+
+### Local LLM integration
+
+- Runs locally through **Ollama**, using models such as `qwen3.5:4b`.
+- Uses Ollama `/api/chat` with non-streaming structured JSON output.
+- Sends bounded, sanitized evidence packets rather than unrestricted database access.
+- Validates model responses with Pydantic schemas before accepting them.
+- Rejects unsupported evidence references, numeric claims in qualitative prose,
+  malformed JSON, incomplete output, and unsafe responses.
+- Records bounded inference telemetry without persisting raw prompts or secrets.
+
+If Ollama is unavailable, disabled, times out, or produces invalid output,
+StockWise falls back to deterministic summaries. Numeric values, citations,
+scenario results, and operational constraints always come from validated saved
+evidence—not from model-generated text.
+
 ## Quick start
 
 ### Requirements
