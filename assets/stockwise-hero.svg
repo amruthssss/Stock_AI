@@ -1,0 +1,35 @@
+<svg width="1200" height="320" viewBox="0 0 1200 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">StockWise retail inventory intelligence</title>
+  <desc id="desc">Animated gradient banner for StockWise.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1200" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111F"/>
+      <stop offset="0.5" stop-color="#102B46"/>
+      <stop offset="1" stop-color="#073B4C"/>
+      <animate attributeName="x1" values="0;220;0" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="x2" values="1200;980;1200" dur="12s" repeatCount="indefinite"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="180" y1="80" x2="990" y2="250" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#56E39F"/>
+      <stop offset="1" stop-color="#45B7FF"/>
+      <animate attributeName="x1" values="180;300;180" dur="8s" repeatCount="indefinite"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="320" rx="28" fill="url(#background)"/>
+  <circle cx="1030" cy="60" r="130" fill="#56E39F" fill-opacity="0.08">
+    <animate attributeName="r" values="130;155;130" dur="7s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="110" cy="280" r="170" fill="#45B7FF" fill-opacity="0.07">
+    <animate attributeName="r" values="170;140;170" dur="9s" repeatCount="indefinite"/>
+  </circle>
+  <path d="M735 244C790 203 814 212 855 174C895 137 928 147 971 105C1008 69 1040 76 1088 40" stroke="url(#accent)" stroke-width="8" stroke-linecap="round" filter="url(#glow)" stroke-dasharray="14 14">
+    <animate attributeName="stroke-dashoffset" from="0" to="-56" dur="2s" repeatCount="indefinite"/>
+  </path>
+  <text x="74" y="126" fill="#F4F8FB" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="58" font-weight="700">StockWise</text>
+  <text x="78" y="174" fill="#B8D5E3" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="23">Retail inventory intelligence, grounded in evidence.</text>
+  <text x="78" y="228" fill="#56E39F" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" letter-spacing="2">FORECAST · RISK · DECISION · INSIGHT</text>
+</svg>
