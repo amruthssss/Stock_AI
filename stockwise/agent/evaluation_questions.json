@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "evaluation_scope": "pre-routed evidence retrieval and deterministic summary safety; it does not evaluate natural-language routing or LLM answer quality",
+  "case_count": 40,
+  "questions": [
+    {
+      "id": "forecast_01",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "Which model has the lowest MAE on the saved held-out forecast run?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_02",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "Which model has the lowest MAE across rolling-origin folds?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_03",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "Summarize the best held-out model for this M5 evaluation.",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_04",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "Compare the saved forecast run and identify the best rolling-origin MAE.",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_05",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "What does the saved holdout evidence say about CA FOODS model accuracy?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_06",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "Which forecasting method ranks first by MAE in the rolling backtest?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_07",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "Give me the best model and its held-out MAE, WAPE, and bias.",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_08",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "Summarize the forecast metrics accumulated across chronological folds.",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_09",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "How many observations support the best saved held-out metric?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_10",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "Which model leads on the rolling-origin evaluation, and what data source was used?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_11",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "Identify the top model from the latest saved held-out forecast comparison.",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_12",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "What is the lowest-MAE candidate in the persisted rolling-origin results?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_13",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "Tell me the result for the best model on the final chronological holdout.",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_14",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "Which candidate produced the smallest average absolute error across rolling folds?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_15",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "What saved evidence supports the forecast winner on held-out data?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_16",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "Summarize the top rolling-origin candidate without making savings claims.",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_17",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "How does the best held-out forecast compare using MAE, WAPE, and bias?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_18",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "Which saved model has the lowest rolling-origin MAE for this run?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_19",
+      "evidence_type": "forecast",
+      "evaluation_period": "held_out",
+      "question": "Report the winning model for the saved held-out M5 sales evaluation.",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "forecast_20",
+      "evidence_type": "forecast",
+      "evaluation_period": "rolling_origin",
+      "question": "What does the persisted evidence identify as the best rolling-origin model?",
+      "required_answer_markers": [
+        "lowest saved MAE",
+        "M5 observed-sales evaluation metrics."
+      ]
+    },
+    {
+      "id": "risk_01",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Which series has the highest recorded stockout probability in this risk run?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_02",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Which item has the most expiry units at risk?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_03",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Summarize the highest stockout and expiry risks in the saved run.",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_04",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "What service-level target was used for this inventory risk analysis?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_05",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Are the on-hand inventory numbers observed M5 data or synthetic assumptions?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_06",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Which saved series has the greatest stockout probability?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_07",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Show the series with the most expiry exposure and the units at risk.",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_08",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Summarize the risk signals while keeping synthetic inventory provenance clear.",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_09",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "What is the largest recorded stockout probability and which series has it?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_10",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Which series has the largest expiry exposure in the latest risk record?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_11",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "How many series are covered by this inventory-risk run?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_12",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "What does the saved risk report say about stockout and expiry exposure?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_13",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Are the demand reference values actual observed sales or assumed inventory?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_14",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Report the highest stockout and expiry signals from saved evidence.",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_15",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Which product is at the greatest recorded expiry risk?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_16",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Which product has the most severe recorded stockout risk?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_17",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "What provenance caveat should accompany these risk values?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_18",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "Summarize the inventory-risk results without making a purchase.",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_19",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "What is the risk run's service-level target and series count?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    },
+    {
+      "id": "risk_20",
+      "evidence_type": "inventory-risk",
+      "evaluation_period": null,
+      "question": "What is the largest expiry exposure, and what source supports the risk summary?",
+      "required_answer_markers": [
+        "stockout probability",
+        "expiry exposure",
+        "Inventory values are synthetic assumptions"
+      ]
+    }
+  ]
+}
+

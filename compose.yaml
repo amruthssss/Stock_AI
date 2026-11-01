@@ -1,0 +1,148 @@
+name: stockwise
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-stockwise}
+      POSTGRES_USER: ${POSTGRES_USER:-stockwise}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - stockwise-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks: [stockwise]
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    environment:
+      STOCKWISE_DATABASE_HOST: postgres
+      STOCKWISE_DATABASE_PORT: 5432
+      STOCKWISE_DATABASE_NAME: ${POSTGRES_DB:-stockwise}
+      STOCKWISE_DATABASE_USER: ${POSTGRES_USER:-stockwise}
+      STOCKWISE_DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [stockwise]
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      STOCKWISE_DATABASE_HOST: postgres
+      STOCKWISE_DATABASE_PORT: 5432
+      STOCKWISE_DATABASE_NAME: ${POSTGRES_DB:-stockwise}
+      STOCKWISE_DATABASE_USER: ${POSTGRES_USER:-stockwise}
+      STOCKWISE_DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      STOCKWISE_LLM_ENABLED: ${STOCKWISE_LLM_ENABLED:-false}
+      STOCKWISE_OLLAMA_BASE_URL: ${STOCKWISE_OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      STOCKWISE_OLLAMA_MODEL: ${STOCKWISE_OLLAMA_MODEL:-}
+      STOCKWISE_LLM_TIMEOUT_SECONDS: ${STOCKWISE_LLM_TIMEOUT_SECONDS:-120}
+      STOCKWISE_AGENT_EXECUTION_MODE: ${STOCKWISE_AGENT_EXECUTION_MODE:-sequential}
+      STOCKWISE_APPROVAL_ADMIN_TOKEN: ${STOCKWISE_APPROVAL_ADMIN_TOKEN:-}
+      STOCKWISE_INTEGRATION_API_KEY_FILE: /run/secrets/stockwise_integration_api_key
+      STOCKWISE_INTEGRATION_RATE_LIMIT_PER_MINUTE: ${STOCKWISE_INTEGRATION_RATE_LIMIT_PER_MINUTE:-60}
+      STOCKWISE_EMAIL_MODE: ${STOCKWISE_EMAIL_MODE:-dry_run}
+      STOCKWISE_EMAIL_SMTP_HOST: mailpit
+      STOCKWISE_EMAIL_SMTP_PORT: ${STOCKWISE_EMAIL_SMTP_PORT:-1025}
+      STOCKWISE_EMAIL_FROM: ${STOCKWISE_EMAIL_FROM:-stockwise@localhost}
+      STOCKWISE_EMAIL_ALLOWED_RECIPIENTS: ${STOCKWISE_EMAIL_ALLOWED_RECIPIENTS:-}
+      STOCKWISE_EMAIL_TIMEOUT_SECONDS: ${STOCKWISE_EMAIL_TIMEOUT_SECONDS:-5}
+    volumes:
+      - ./data:/app/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:${STOCKWISE_API_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/ready', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    networks: [stockwise]
+    secrets:
+      - stockwise_integration_api_key
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      STOCKWISE_DATABASE_HOST: postgres
+      STOCKWISE_DATABASE_PORT: 5432
+      STOCKWISE_DATABASE_NAME: ${POSTGRES_DB:-stockwise}
+      STOCKWISE_DATABASE_USER: ${POSTGRES_USER:-stockwise}
+      STOCKWISE_DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    command: ["python", "-m", "stockwise.jobs.worker"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    networks: [stockwise]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      STOCKWISE_API_BASE_URL: http://backend:8000/api/v1
+    ports:
+      - "127.0.0.1:${STOCKWISE_FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks: [stockwise]
+
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    profiles: ["llm"]
+    volumes:
+      - stockwise-ollama-data:/root/.ollama
+    ports:
+      - "127.0.0.1:${STOCKWISE_OLLAMA_PORT:-11434}:11434"
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    networks: [stockwise]
+
+  mailpit:
+    image: axllent/mailpit:v1.32.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
+    networks: [stockwise]
+
+networks:
+  stockwise:
+    name: stockwise
+
+volumes:
+  stockwise-postgres-data:
+  stockwise-ollama-data:
+
+secrets:
+  stockwise_integration_api_key:
+    file: ${LOCALAPPDATA}/StockWise/secrets/stockwise_integration_api_key

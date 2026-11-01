@@ -1,0 +1,16 @@
+.git
+.venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+.mypy_cache
+frontend/node_modules
+frontend/.next
+frontend/test-results
+data/raw
+data/processed
+.env
+.env.*
+!.env.example
+*.log

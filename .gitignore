@@ -1,0 +1,26 @@
+# Python environments and generated files
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Local M5 data and generated analytical outputs
+/data/raw/
+/data/processed/
+
+# Next.js frontend build output and local dependencies
+/frontend/node_modules/
+/frontend/.next/
+/frontend/out/
+/frontend/*.tsbuildinfo
+/frontend/test-results/
+/frontend/playwright-report/
+/frontend/blob-report/
+!/frontend/.env.example
