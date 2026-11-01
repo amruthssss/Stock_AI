@@ -90,7 +90,7 @@ services:
       STOCKWISE_DATABASE_NAME: ${POSTGRES_DB:-stockwise}
       STOCKWISE_DATABASE_USER: ${POSTGRES_USER:-stockwise}
       STOCKWISE_DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-    command: ["python", "-m", "stockwise.jobs.worker"]
+    command: ["python", "-m", "backend.jobs.worker"]
     depends_on:
       migrate:
         condition: service_completed_successfully

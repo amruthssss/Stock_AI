@@ -17,7 +17,7 @@ try {
 }
 
 $process = Start-Process -FilePath $python -ArgumentList @(
-    '-m', 'stockwise.gateway', '--host', '127.0.0.1', '--port', $port,
+    '-m', 'backend.gateway', '--host', '127.0.0.1', '--port', $port,
     '--upstream', 'http://127.0.0.1:8000', '--pid-file', $pidFile
 ) -WorkingDirectory (Get-Location) -PassThru -WindowStyle Hidden
 

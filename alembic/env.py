@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from alembic import context
-from stockwise.api.config import get_database_url
-from stockwise.api.database import create_database_engine
-from stockwise.persistence.models import Base
+from backend.api.config import get_database_url
+from backend.api.database import create_database_engine
+from backend.persistence.models import Base
 
 
 config = context.config
